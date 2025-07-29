@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Support Material Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .section-card {
+      min-height: 100%;
+    }
+    .btn-large {
+      font-size: 16px;
+      padding: 12px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="assets/logo.png" alt="Logo" height="50">   Support Hub</a>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container my-4">
+    <h2 class="text-center mb-4">Quick Access Panel</h2>
+
+    <!-- Row 1 -->
+    <div class="row">
+      <!-- Product Downloads -->
+      <div class="col-md-4 mb-3">
+        <div class="card section-card">
+          <div class="card-body">
+            <h5 class="card-title">🗂️ Product Downloads</h5>
+            <p class="card-text">Click below to download software and installers.</p>
+            <a href="https://drive.google.com/file/d/1Xjt81W7Dn36J2ybPM5z7c3wba5ucKRY5/view" 
+               class="btn btn-primary btn-large" target="_blank">Download EXE</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Complaint Form -->
+      <div class="col-md-4 mb-3">
+        <div class="card section-card">
+          <div class="card-body">
+            <h5 class="card-title">📝 Complaint Form</h5>
+            <p class="card-text">Submit complaints, requests, or feedback.</p>
+            <a href="https://forms.gle/your-complaint-form-link" 
+               class="btn btn-success btn-large" target="_blank">Open Complaint Form</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Latest Sales Schemes -->
+      <div class="col-md-4 mb-3">
+        <div class="card section-card">
+          <div class="card-body">
+            <h5 class="card-title">📢 Latest Sales Schemes</h5>
+            <p class="card-text">Only schemes active today will be shown.</p>
+            <button onclick="window.location.href='add-scheme.html'" class="btn btn-warning btn-large mb-2">➕ Add New Scheme</button>
+            <div id="schemes-list">Loading schemes...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="row mt-4">
+      <!-- Daily Highlights -->
+      <div class="col-md-6 mb-3">
+        <div class="card section-card">
+          <div class="card-body">
+            <h5 class="card-title">💡 Daily Highlights</h5>
+            <p class="card-text">Latest updates submitted by team members (last 7 days).</p>
+            <button onclick="window.location.href='add-highlight.html'" class="btn btn-info btn-large mb-2">➕ Add New Highlight</button>
+            <div id="highlights-list">Loading highlights...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Google Forms Access -->
+      <div class="col-md-6 mb-3">
+        <div class="card section-card">
+          <div class="card-body text-center">
+            <h5 class="card-title">📄 Google Forms</h5>
+            <p class="card-text">Click below to access all your Google Forms in Drive.</p>
+            <a href="https://drive.google.com/drive/search?q=type:form" 
+               class="btn btn-primary btn-large" target="_blank">📄 Open My Google Forms</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="row mt-4">
+      <!-- Google Sheets Access -->
+      <div class="col-md-6 mb-3">
+        <div class="card section-card">
+          <div class="card-body text-center">
+            <h5 class="card-title">📊 Google Sheets</h5>
+            <p class="card-text">Click below to access all your Google Sheets in Drive.</p>
+            <a href="https://drive.google.com/drive/search?q=type:spreadsheet" 
+               class="btn btn-success btn-large" target="_blank">📊 Open My Google Sheets</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Google Docs Access -->
+      <div class="col-md-6 mb-3">
+        <div class="card section-card">
+          <div class="card-body text-center">
+            <h5 class="card-title">📝 Google Docs</h5>
+            <p class="card-text">Click below to access all your Google Docs in Drive.</p>
+            <a href="https://drive.google.com/drive/search?q=type:document" 
+               class="btn btn-warning btn-large" target="_blank">📝 Open My Google Docs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 4 -->
+    <div class="row mt-4">
+      <!-- Upload Section -->
+      <div class="col-md-6 mb-3">
+        <div class="card section-card border border-danger">
+          <div class="card-body">
+            <h5 class="card-title">📤 Upload File (Authorized User Only)</h5>
+            <p class="card-text">Only designated users can upload files via this secure form.</p>
+            <a href="https://forms.gle/Wqxq2h21AYu2hfNo8" 
+               class="btn btn-danger btn-large" target="_blank">Upload via Form</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-2 mt-5">
+    <small>© 2025 Your Company | For Internal Use Only</small>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    function loadHighlights() {
+      let highlights = JSON.parse(localStorage.getItem("dailyHighlights")) || [];
+      const container = document.getElementById("highlights-list");
+      const today = new Date();
+
+      if (highlights.length === 0) {
+        container.innerHTML = "No highlights yet.";
+        return;
+      }
+
+      container.innerHTML = "";
+      highlights.forEach(h => {
+        const entryDate = new Date(h.date);
+        const diffDays = (today - entryDate) / (1000 * 60 * 60 * 24);
+        if (diffDays <= 7) {
+          container.innerHTML += `<div class="highlight-entry"><strong>${entryDate.toLocaleDateString()}</strong>: ${h.text}</div>`;
+        }
+      });
+    }
+
+    function loadSchemes() {
+      let schemes = JSON.parse(localStorage.getItem("salesSchemes")) || [];
+      const container = document.getElementById("schemes-list");
+      const today = new Date();
+
+      if (schemes.length === 0) {
+        container.innerHTML = "No sales schemes yet.";
+        return;
+      }
+
+      container.innerHTML = "";
+      schemes.forEach(s => {
+        const fromDate = new Date(s.from);
+        const tillDate = new Date(s.till);
+        if (today >= fromDate && today <= tillDate) {
+          container.innerHTML += `<div class="highlight-entry"><strong>${fromDate.toLocaleDateString()} - ${tillDate.toLocaleDateString()}</strong>: ${s.text}</div>`;
+        }
+      });
+    }
+
+    loadHighlights();
+    loadSchemes();
+  </script>
+</body>
+</html>
